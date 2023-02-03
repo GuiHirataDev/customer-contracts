@@ -1,10 +1,13 @@
 import styles from "./styles.module.css"
+import api from "../../services/Api";
 
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export const RegisterPage = () => {
 
   const { register, handleSubmit } = useForm<IDataForm>()
+  const navigate = useNavigate()
 
   interface IDataForm {
     name: string;
@@ -14,7 +17,11 @@ export const RegisterPage = () => {
   }
 
   const handleData = async (data: IDataForm) => {
-    // Axios
+    api
+      .post("/customers", data)
+      .then((res) => {
+        setTimeout(navigate, 1500, "/login")
+      })
   }
 
   return (

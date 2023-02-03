@@ -1,14 +1,17 @@
 import { AppDataSource } from "../../data-source";
 import { Customer } from "../../entities/customer.entity"
 import { ICustomerRequest } from "../../interfaces/customers.interface";
-import { AppError } from "../../errors/appError";
+import { hash } from "bcrypt";
 
-const createCustumerService = async ({name, email, phone}: ICustomerRequest): Promise<Customer> => {
+const createCustumerService = async ({name, email, password, phone}: ICustomerRequest): Promise<Customer> => {
     const customerRepository = AppDataSource.getRepository(Customer)
+
+    const hashedPassword = await hash(password, 10)
 
     const customer = customerRepository.create({
       name,
       email,
+      password: hashedPassword,
       phone
     })
 

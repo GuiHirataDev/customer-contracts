@@ -1,10 +1,12 @@
 import styles from "./styles.module.css";
+import api from "../../services/Api";
 
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 export const DashboardPage = () => {
-
   const { register, handleSubmit } = useForm<IDataForm>();
+  const [contacts, setContacts] = useState<IDataContacts[]>([]);
 
   interface IDataForm {
     name: string;
@@ -12,17 +14,35 @@ export const DashboardPage = () => {
     email: string;
   }
 
+  interface IDataContacts extends IDataForm {
+    id: string;
+  }
+
   const handleData = async (data: IDataForm) => {
-    //Axios
+    api
+      .post("/contacts", data, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("@TOKEN")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res)
+      });
   };
+
+  const handleContacts = async () => {
+    api
+      .get("/contacts", {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("@TOKEN")}` 
+        }
+      }).then(res => setContacts(res.data))
+  }
 
   return (
     <main className={styles.main}>
       <section className={styles.section}>
-        <form 
-            className={styles.form}
-            onSubmit={handleSubmit(handleData)}
-        >
+        <form className={styles.form} onSubmit={handleSubmit(handleData)}>
           <h1 className={styles.h1}>Cadastrar contatos</h1>
           <label>
             <input
@@ -41,21 +61,31 @@ export const DashboardPage = () => {
             />
           </label>
           <label>
-            <input type="text" placeholder="Email" className={styles.input}
-            {...register("email")} 
+            <input
+              type="text"
+              placeholder="Email"
+              className={styles.input}
+              {...register("email")}
             />
           </label>
           <button className={styles.button}>Enviar</button>
         </form>
       </section>
       <section className={styles.sectionTwo}>
-        <button className={styles.buttonTwo}>Mostrar contatos</button>
+        <button 
+          className={styles.buttonTwo}
+          onClick={handleContacts}
+        >Mostrar contatos</button>
         <div className={styles.div}>
-          <div className={styles.cardExample}>
-            <h2>Joao da Silva</h2>
-            <p>joao@hotmail.com</p>
-            <p>(19)3222-5672</p>
-          </div>
+          {contacts.map((elem) => {
+            return (
+              <div className={styles.cardExample} key={elem.id}>
+                <h2>{elem.name}</h2>
+                <p className={styles.email}>{elem.email}</p>
+                <p>{elem.phone}</p>
+              </div>
+            );
+          })}
         </div>
       </section>
     </main>

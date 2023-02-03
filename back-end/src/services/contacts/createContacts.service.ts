@@ -4,16 +4,16 @@ import { Customer } from "../../entities/customer.entity";
 import { AppError } from "../../errors/appError";
 import { IContactRequest } from "../../interfaces/contacts.interface";
 
-const createContactsService = async ({email_customer, name, email, phone}: IContactRequest): Promise<Contact> => {
+const createContactsService = async ({ name, email, phone}: IContactRequest, id: string): Promise<Contact> => {
     const customerRepository = AppDataSource.getRepository(Customer)
     const contactRepository = AppDataSource.getRepository(Contact)
 
     const customer = await customerRepository.findOneBy({
-        email: email_customer
+        id
     })
 
     if(!customer) {
-        throw new AppError("Customer not found", 404)
+        throw new AppError("Cliente não encontrado", 404)
     }
 
     const contact = contactRepository.create({

@@ -1,9 +1,12 @@
 import styles from "./styles.module.css";
 
 import { useForm } from "react-hook-form";
+import api from "../../services/Api";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
   const { register, handleSubmit } = useForm<IDataForm>();
+  const navigate = useNavigate()
 
   interface IDataForm {
     email: string;
@@ -11,7 +14,12 @@ export const LoginPage = () => {
   }
 
   const handleData = async (data: IDataForm) => {
-    //Axios
+    api 
+      .post("/login", data)
+      .then((res) => {
+        window.localStorage.setItem("@TOKEN", res.data.token)
+        setTimeout(navigate, 1500, "/dashboard")
+      })
   };
 
   return (
