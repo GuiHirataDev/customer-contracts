@@ -7,6 +7,23 @@
     color: #159A9C;
   }
 
+  .link {
+    margin: 15px 0px 0px 15px;
+    height: 45px;
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-decoration: none;
+    color: #fff;
+    font-size: 35px;
+
+    border: 2px solid #159A9C;
+    border-radius: 10px;
+    background-color: #159A9C;
+  }
+
   .section {
     width: 50%;
     height: 100vh;

@@ -7,7 +7,7 @@ const createCustumerController = async (req: Request, res: Response) => {
   try {
     const custumer: ICustomerRequest = req.body;
     const createdCustomer = await createCustumerService(custumer);
-    return res.json(instanceToPlain(createdCustomer));
+    return res.status(201).json(instanceToPlain(createdCustomer));
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({

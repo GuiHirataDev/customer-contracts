@@ -10,3 +10,10 @@ export interface ICustomerResponse extends ICustomerRequest{
     date: Date;
 }
 
+export interface ICustomerUpdateRequest {
+  name?: string;
+  email?: string;
+  phone?: number;
+  password?: string;
+}
+

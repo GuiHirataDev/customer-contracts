@@ -7,6 +7,7 @@ import "express-async-errors"
 import handleErrorMiddleware from "./middlewares/handleError.middleware";
 import cors from "cors"
 
+
 const app = express();
 
 app.use(cors())
@@ -17,6 +18,5 @@ app.use("/contacts", contactsRoutes);
 app.use("/login", sessionRoutes)
 
 app.use(handleErrorMiddleware)
-app.listen(3000, () => {
-  console.log("Server running in port 3000");
-});
+
+export default app;

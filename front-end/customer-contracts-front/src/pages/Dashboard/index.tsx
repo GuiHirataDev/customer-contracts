@@ -1,12 +1,30 @@
 import styles from "./styles.module.css";
 import api from "../../services/Api";
+import { useState } from "react";
 
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { ToastContainer  } from "react-toastify";
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { Link } from "react-router-dom";
+import { AiFillHome } from "react-icons/ai"
+
 
 export const DashboardPage = () => {
   const { register, handleSubmit } = useForm<IDataForm>();
   const [contacts, setContacts] = useState<IDataContacts[]>([]);
+
+  const toastSucess = () => {
+    toast.success("Contato cadastrado com sucesso")
+  }
+
+  const toastError = () => {
+    toast.error("Não foi possível realizar o cadastro")
+  }
+
+  const toastErrorGet = () => {
+    toast.error("Você não tem permissão para acessar os contatos")
+  }
 
   interface IDataForm {
     name: string;
@@ -27,7 +45,9 @@ export const DashboardPage = () => {
       })
       .then((res) => {
         console.log(res)
-      });
+      })
+      .then(toastSucess)
+      .catch(toastError)
   };
 
   const handleContacts = async () => {
@@ -37,10 +57,17 @@ export const DashboardPage = () => {
           Authorization: `Bearer ${window.localStorage.getItem("@TOKEN")}` 
         }
       }).then(res => setContacts(res.data))
+      .catch(toastErrorGet)
   }
 
   return (
     <main className={styles.main}>
+      <Link 
+        to={"/login"}
+        className={styles.link}
+      >
+        <AiFillHome />
+      </Link>
       <section className={styles.section}>
         <form className={styles.form} onSubmit={handleSubmit(handleData)}>
           <h1 className={styles.h1}>Cadastrar contatos</h1>
@@ -88,6 +115,7 @@ export const DashboardPage = () => {
           })}
         </div>
       </section>
+      <ToastContainer />
     </main>
   );
 };

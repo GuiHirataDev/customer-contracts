@@ -2,11 +2,21 @@
     width: 100vw;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   
     font-family: Arial, Helvetica, sans-serif;
     color: #159A9C;
+  }
+
+  .link {
+    width: 300px;
+    margin-bottom: 5px;
+
+    text-decoration: none;
+    color: #159A9C;
+    font-size: 40px;
   }
   
   .form {

@@ -1,12 +1,24 @@
 import styles from "./styles.module.css";
+import api from "../../services/Api";
 
 import { useForm } from "react-hook-form";
-import api from "../../services/Api";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { ToastContainer  } from "react-toastify";
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 export const LoginPage = () => {
   const { register, handleSubmit } = useForm<IDataForm>();
   const navigate = useNavigate()
+
+  const toastSucess = () => {
+    toast.success("Login realizado com sucesso")
+  }
+
+  const toastError = () => {
+    toast.error("Não foi possível realizar o login")
+  }
 
   interface IDataForm {
     email: string;
@@ -20,6 +32,8 @@ export const LoginPage = () => {
         window.localStorage.setItem("@TOKEN", res.data.token)
         setTimeout(navigate, 1500, "/dashboard")
       })
+      .then(toastSucess)
+      .catch(toastError)
   };
 
   return (
@@ -39,8 +53,10 @@ export const LoginPage = () => {
           {...register("password")} 
           />
         </label>
+        <Link to={"/register"}>Não é um cliente ?</Link>
         <button className={styles.button}>Enviar</button>
       </form>
+      <ToastContainer />
     </main>
   );
 };

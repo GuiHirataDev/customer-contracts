@@ -4,7 +4,7 @@ import { Customer } from "../../entities/customer.entity";
 import { AppError } from "../../errors/appError";
 import { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
-import "dotenv/config"
+import "dotenv/config";
 
 const createSessionService = async ({
   email,
@@ -26,12 +26,12 @@ const createSessionService = async ({
     throw new AppError("Usuário ou senha inválida", 401);
   }
 
-  const token = jwt.sign({}, "32121assad", {
+  const token = jwt.sign({}, process.env.SECRET_KEY as string, {
     expiresIn: "24h",
     subject: customer.id,
   });
 
-  return token
+  return token;
 };
 
 export default createSessionService;

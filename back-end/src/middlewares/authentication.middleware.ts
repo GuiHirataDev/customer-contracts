@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import "dotenv/config"
 
 const authenticationMiddleware = async (
   req: Request,
@@ -16,7 +17,7 @@ const authenticationMiddleware = async (
 
   token = token.split(" ")[1];
 
-  jwt.verify(token, "32121assad", (error, decoded: any) => {
+  jwt.verify(token, process.env.SECRET_KEY as string, (error, decoded: any) => {
     if (error) {
       return res.status(401).json({
         message: "Token inválido",

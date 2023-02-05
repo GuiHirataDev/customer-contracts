@@ -3,11 +3,24 @@ import api from "../../services/Api";
 
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"
+import { ToastContainer  } from "react-toastify";
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { BsFillArrowLeftSquareFill } from "react-icons/bs"
 
 export const RegisterPage = () => {
 
   const { register, handleSubmit } = useForm<IDataForm>()
   const navigate = useNavigate()
+
+  const toastSucess = () => {
+    toast.success("Cliente cadastrado com sucesso")
+  }
+
+  const toastError = () => {
+    toast.error("Não foi possível realizar o cadastro")
+  }
 
   interface IDataForm {
     name: string;
@@ -22,10 +35,18 @@ export const RegisterPage = () => {
       .then((res) => {
         setTimeout(navigate, 1500, "/login")
       })
+      .then(toastSucess)
+      .catch(toastError)
   }
 
   return (
     <main className={styles.main}>
+      <Link 
+        to={"/login"} 
+        className={styles.link}
+      >
+        <BsFillArrowLeftSquareFill />
+      </Link>
       <form 
         className={styles.form}
         onSubmit={handleSubmit(handleData)}
@@ -57,6 +78,7 @@ export const RegisterPage = () => {
         </label>
         <button className={styles.button}>Enviar</button>
       </form>
+      <ToastContainer />
     </main>
   );
 };
