@@ -15,4 +15,4 @@ const deleteCustomerController = async (req: Request, res: Response) => {
   }
 };
 
-export default deleteCustomerController
+export default deleteCustomerController;

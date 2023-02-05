@@ -5,9 +5,9 @@ export interface ICustomerRequest {
   password: string;
 }
 
-export interface ICustomerResponse extends ICustomerRequest{
-    id: string;
-    date: Date;
+export interface ICustomerResponse extends ICustomerRequest {
+  id: string;
+  date: Date;
 }
 
 export interface ICustomerUpdateRequest {
@@ -16,4 +16,3 @@ export interface ICustomerUpdateRequest {
   phone?: number;
   password?: string;
 }
-

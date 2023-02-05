@@ -10,10 +10,10 @@ const createContactsController = async (req: Request, res: Response) => {
     return res.status(201).json(createdContact);
   } catch (error) {
     if (error instanceof Error) {
-        return res.status(400).json({
-          message: error.message,
-        });
-      }
+      return res.status(400).json({
+        message: error.message,
+      });
+    }
   }
 };
 

@@ -3,28 +3,27 @@ import api from "../../services/Api";
 import { useState } from "react";
 
 import { useForm } from "react-hook-form";
-import { ToastContainer  } from "react-toastify";
-import { toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
-import { AiFillHome } from "react-icons/ai"
-
+import { AiFillHome } from "react-icons/ai";
 
 export const DashboardPage = () => {
   const { register, handleSubmit } = useForm<IDataForm>();
   const [contacts, setContacts] = useState<IDataContacts[]>([]);
 
   const toastSucess = () => {
-    toast.success("Contato cadastrado com sucesso")
-  }
+    toast.success("Contato cadastrado com sucesso");
+  };
 
   const toastError = () => {
-    toast.error("Não foi possível realizar o cadastro")
-  }
+    toast.error("Não foi possível realizar o cadastro");
+  };
 
   const toastErrorGet = () => {
-    toast.error("Você não tem permissão para acessar os contatos")
-  }
+    toast.error("Você não tem permissão para acessar os contatos");
+  };
 
   interface IDataForm {
     name: string;
@@ -44,28 +43,26 @@ export const DashboardPage = () => {
         },
       })
       .then((res) => {
-        console.log(res)
+        console.log(res);
       })
       .then(toastSucess)
-      .catch(toastError)
+      .catch(toastError);
   };
 
   const handleContacts = async () => {
     api
       .get("/contacts", {
         headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("@TOKEN")}` 
-        }
-      }).then(res => setContacts(res.data))
-      .catch(toastErrorGet)
-  }
+          Authorization: `Bearer ${window.localStorage.getItem("@TOKEN")}`,
+        },
+      })
+      .then((res) => setContacts(res.data))
+      .catch(toastErrorGet);
+  };
 
   return (
     <main className={styles.main}>
-      <Link 
-        to={"/login"}
-        className={styles.link}
-      >
+      <Link to={"/login"} className={styles.link}>
         <AiFillHome />
       </Link>
       <section className={styles.section}>
@@ -99,10 +96,9 @@ export const DashboardPage = () => {
         </form>
       </section>
       <section className={styles.sectionTwo}>
-        <button 
-          className={styles.buttonTwo}
-          onClick={handleContacts}
-        >Mostrar contatos</button>
+        <button className={styles.buttonTwo} onClick={handleContacts}>
+          Mostrar contatos
+        </button>
         <div className={styles.div}>
           {contacts.map((elem) => {
             return (

@@ -2,11 +2,11 @@ import { AppDataSource } from "../../data-source";
 import { Customer } from "../../entities/customer.entity";
 
 const listCustomerService = async (): Promise<Customer[]> => {
-    const customerRepository = AppDataSource.getRepository(Customer)
+  const customerRepository = AppDataSource.getRepository(Customer);
 
-    const customers = await customerRepository.find()
+  const customers = await customerRepository.find();
 
-    return customers
-}
+  return customers;
+};
 
-export default listCustomerService
+export default listCustomerService;

@@ -9,7 +9,15 @@ const customerRoutes = Router();
 
 customerRoutes.post("", createCustumerController);
 customerRoutes.get("", authenticationMiddleware, listCustomerController);
-customerRoutes.patch("/:id", authenticationMiddleware, updateCustomerController)
-customerRoutes.delete("/:id", authenticationMiddleware, deleteCustomerController)
+customerRoutes.patch(
+  "/:id",
+  authenticationMiddleware,
+  updateCustomerController
+);
+customerRoutes.delete(
+  "/:id",
+  authenticationMiddleware,
+  deleteCustomerController
+);
 
 export default customerRoutes;

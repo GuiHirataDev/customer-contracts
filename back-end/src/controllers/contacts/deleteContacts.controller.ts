@@ -15,4 +15,4 @@ const deleteContactController = async (req: Request, res: Response) => {
   }
 };
 
-export default deleteContactController
+export default deleteContactController;

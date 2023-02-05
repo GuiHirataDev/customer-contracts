@@ -17,4 +17,4 @@ const updateContactController = async (req: Request, res: Response) => {
   }
 };
 
-export default updateContactController
+export default updateContactController;
