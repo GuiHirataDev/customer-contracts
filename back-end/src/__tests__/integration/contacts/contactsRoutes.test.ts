@@ -61,4 +61,32 @@ describe("/contacts", () => {
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(401)
     })
+
+    test("PATCH /contacts - Deve ser capaz de atualizar as informações do contato", async () => {
+        const newValues = {name: "NovoNome", email: "novoemail@email.com"}
+
+        const customerLoginResponse = await request(app).post("/login").send(mockedCustomerLogin)
+        const token = `Bearer ${customerLoginResponse.body.token}`
+
+        const contactToBeUpdateRequest = await request(app).get("/contacts").set("Authorization", token)
+        const contactToBeUpdateId = contactToBeUpdateRequest.body[0].id
+
+        const response = await request(app).patch(`/contacts/${contactToBeUpdateId}`).set("Authorization", token).send(newValues)
+
+        const contactUpdated = await request(app).get("/contacts").set("Authorization", token)
+
+        expect(response.status).toBe(200)
+        expect(contactUpdated.body[0].name).toEqual("NovoNome")
+    })
+
+    test("DELETE - /contacts/:id - Deve ser capaz de deletar um contato", async() => {
+        await request(app).post("/customers").send(mockedCustomer)
+        
+        const customerLoginResponse = await request(app).post("/login").send(mockedCustomerLogin)
+        const contactToBeDeleted = await request(app).get("/contacts").set("Authorization", `Bearer ${customerLoginResponse.body.token}`)
+
+        const response = await request(app).delete(`/contacts/${contactToBeDeleted.body[0].id}`).set("Authorization", `Bearer ${customerLoginResponse.body.token}`)
+
+        expect(response.status).toBe(204)
+    })
 })

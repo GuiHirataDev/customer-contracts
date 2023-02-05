@@ -53,7 +53,7 @@ describe("/customers", () => {
         expect(response.status).toBe(401)        
     })
 
-    test("PATCH /customers - Deve ser capaz de atualizar as informações do cliente", async () => {
+    test("PATCH /customers/:id - Deve ser capaz de atualizar as informações do cliente", async () => {
         const newValues = {name: "NovoNome", email: "novoemail@email.com"}
 
         const customerLoginResponse = await request(app).post("/login").send(mockedCustomerLogin)
@@ -70,4 +70,5 @@ describe("/customers", () => {
         expect(customerUpdated.body[0].name).toEqual("NovoNome")
         expect(customerUpdated.body[0]).not.toHaveProperty("password")
     })
+
 })
