@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import api from "../../services/Api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
@@ -49,16 +49,21 @@ export const DashboardPage = () => {
       .catch(toastError);
   };
 
-  const handleContacts = async () => {
-    api
-      .get("/contacts", {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("@TOKEN")}`,
-        },
-      })
-      .then((res) => setContacts(res.data))
-      .catch(toastErrorGet);
-  };
+  
+
+  useEffect(() => {
+    const handleContacts = async () => {
+      api
+        .get("/contacts", {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("@TOKEN")}`,
+          },
+        })
+        .then((res) => setContacts(res.data))
+        .catch(toastErrorGet);
+    };
+    handleContacts()
+  }, [contacts])
 
   return (
     <main className={styles.main}>
@@ -96,9 +101,7 @@ export const DashboardPage = () => {
         </form>
       </section>
       <section className={styles.sectionTwo}>
-        <button className={styles.buttonTwo} onClick={handleContacts}>
-          Mostrar contatos
-        </button>
+        <h1 className={styles.h1}>Contatos</h1>
         <div className={styles.div}>
           {contacts.map((elem) => {
             return (
