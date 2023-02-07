@@ -59,7 +59,8 @@
 
 ## Como rodar os testes
 
-    No diretório "back-end", rode o comando "yarn test" quando a aplicação não estiver rodando.
+    1. No diretório "back-end", rode o comando "yarn test" quando a aplicação não estiver rodando.
+    2. Caso apareça o erro "NODE_ENV" e você esteja no Windows, tente instalar biblioteca "win-node-env", com o comando "npm install -g win-node-env" e reiniciar o projeto.
 
 ## Problemas em aberto
 
