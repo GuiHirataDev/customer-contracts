@@ -26,6 +26,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  position: relative;
 
   border: 2px solid #002333;
   border-radius: 10px;
@@ -44,6 +45,19 @@
   outline-color: #159a9c;
   border-radius: 10px;
 
+  font-size: 20px;
+}
+
+.eyeButton {
+  position: absolute;
+  bottom: 100px;
+  right: 25px;
+
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  
+  color: #159a9c;
   font-size: 20px;
 }
 

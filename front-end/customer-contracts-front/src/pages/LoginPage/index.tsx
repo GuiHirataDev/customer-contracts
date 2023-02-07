@@ -1,5 +1,6 @@
 import styles from "./styles.module.css";
 import api from "../../services/Api";
+import { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -7,10 +8,21 @@ import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 export const LoginPage = () => {
   const { register, handleSubmit } = useForm<IDataForm>();
   const navigate = useNavigate();
+  const [typePassword, setTypePassword] = useState<string>("password");
+
+  const showPassword = (e: any) => {
+    e.preventDefault();
+    setTypePassword("text");
+  };
+  const hidePassword = (e: any) => {
+    e.preventDefault();
+    setTypePassword("password");
+  };
 
   const toastSucess = () => {
     toast.success("Login realizado com sucesso");
@@ -50,12 +62,21 @@ export const LoginPage = () => {
         </label>
         <label>
           <input
-            type="text"
+            type={typePassword}
             placeholder="Senha"
             className={styles.input}
             {...register("password")}
           />
         </label>
+        {typePassword === "password" ? (
+          <button onClick={showPassword} className={styles.eyeButton}>
+            <AiFillEye />
+          </button>
+        ) : (
+          <button onClick={hidePassword} className={styles.eyeButton}>
+            <AiFillEyeInvisible />
+          </button>
+        )}
         <Link to={"/register"}>Não é um cliente ?</Link>
         <button className={styles.button}>Enviar</button>
       </form>
